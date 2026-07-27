@@ -5,7 +5,8 @@ import { RouterOutlet } from '@angular/router';
   selector: 'qv1-root',
   imports: [RouterOutlet],
   template: `
-    <h1>Hello, {{ title() }}</h1>
+    <h1>Hello, {{ title() }}!!!</h1>
+    <p>Angular works!</p>
 
     <router-outlet />
   `,
