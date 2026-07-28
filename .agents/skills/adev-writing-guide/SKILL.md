@@ -88,8 +88,8 @@ You can enhance code blocks with attributes in curly braces `{}` after the langu
 ````markdown
 ```angular-ts {header:"My Component", linenums, highlight="[2]"}
 @Component({
-  selector: 'my-app',
-  template: '<h1>Hello</h1>',
+  selector: "my-app",
+  template: "<h1>Hello</h1>",
 })
 export class App {}
 ```
