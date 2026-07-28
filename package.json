@@ -10,7 +10,10 @@
     "http-server": "npx http-server dist/ActivityBookings/browser -c-1",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:ActivityBookings": "node dist/ActivityBookings/server/server.mjs"
+    "serve:ssr:ActivityBookings": "node dist/ActivityBookings/server/server.mjs",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "fmt": "oxfmt"
   },
   "private": true,
   "packageManager": "npm@11.17.0",
