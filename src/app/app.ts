@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+
 import { Footer } from './core/footer/footer';
 import { Header } from './core/header/header';
 
@@ -15,6 +16,4 @@ import { Header } from './core/header/header';
   `,
   styles: [],
 })
-export class App {
-  protected readonly title = signal('ActivityBookings');
-}
+export class App {}

@@ -7,7 +7,14 @@ import { Component } from '@angular/core';
   styleUrl: './footer.css',
 })
 export class Footer {
-  getYear() {
-    return new Date().getFullYear();
+  author = {
+    nickname: 'Qv1ko',
+    github: 'https://github.com/Qv1ko',
+  };
+
+  year = new Date().getFullYear();
+
+  onCookiesAccepted() {
+    console.info('Cookies accepted');
   }
 }

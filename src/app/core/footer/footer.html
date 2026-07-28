@@ -1,6 +1,6 @@
 <footer>
   <nav>
-    <a href="#" target="_blank">© {{ getYear() }} Qv1ko </a>
-    <button>Accept Cookies</button>
+    <a [href]="author.github" target="_blank">© {{ year }} {{ author.nickname }} </a>
+    <button (click)="onCookiesAccepted()">Accept Cookies</button>
   </nav>
 </footer>
