@@ -1,14 +1,17 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Footer } from './core/footer/footer';
+import { Header } from './core/header/header';
 
 @Component({
   selector: 'qv1-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, Header, Footer],
   template: `
-    <h1>Hello, {{ title() }}!!!</h1>
+    <qv1-header />
     <p>Angular works!</p>
 
     <router-outlet />
+    <qv1-footer />
   `,
   styles: [],
 })
