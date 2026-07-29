@@ -1,12 +1,13 @@
 import { CurrencyPipe, DatePipe, UpperCasePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { Activity } from '../domain/activity.type';
 import { ActivityTitlePipe } from './activity-title-pipe';
 
 @Component({
   selector: 'qv1-bookings',
-  imports: [CurrencyPipe, DatePipe, UpperCasePipe, ActivityTitlePipe],
+  imports: [CurrencyPipe, DatePipe, UpperCasePipe, ActivityTitlePipe, FormsModule],
   templateUrl: './bookings.html',
   styleUrl: './bookings.css',
 })
@@ -24,5 +25,17 @@ export class Bookings {
     duration: 2,
     userId: 1,
   };
-  currentParticipants = 3;
+
+  readonly currentParticipants = 3;
+
+  readonly newParticipants = signal(0);
+  readonly booked = signal(false);
+
+  onNewParticipantsChange(newParticipants: number) {
+    this.newParticipants.set(newParticipants);
+  }
+
+  onBookClick() {
+    this.booked.set(true);
+  }
 }
