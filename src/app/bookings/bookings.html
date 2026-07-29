@@ -1,6 +1,5 @@
-<p>{{ activity.name }}</p>
+<h1>{{ activity | activityTitle }}</h1>
 <div>
-  <p>{{ activity.location }}</p>
   <p>{{ activity.price | currency }}</p>
   <p>{{ activity.date | date:"dd-MMM-yyyy" }}</p>
   <p>{{ activity.status | uppercase }}</p>

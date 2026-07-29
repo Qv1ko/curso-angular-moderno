@@ -2,10 +2,11 @@ import { CurrencyPipe, DatePipe, UpperCasePipe } from '@angular/common';
 import { Component } from '@angular/core';
 
 import { Activity } from '../domain/activity.type';
+import { ActivityTitlePipe } from './activity-title-pipe';
 
 @Component({
   selector: 'qv1-bookings',
-  imports: [CurrencyPipe, DatePipe, UpperCasePipe],
+  imports: [CurrencyPipe, DatePipe, UpperCasePipe, ActivityTitlePipe],
   templateUrl: './bookings.html',
   styleUrl: './bookings.css',
 })
