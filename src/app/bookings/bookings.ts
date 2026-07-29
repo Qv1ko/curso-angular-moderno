@@ -18,10 +18,11 @@ export class Bookings {
     date: new Date(2025, 7, 29),
     minParticipants: 4,
     maxParticipants: 10,
-    status: 'published',
+    status: 'draft',
     id: 1,
     slug: 'paddle-surf',
     duration: 2,
     userId: 1,
   };
+  currentParticipants = 3;
 }

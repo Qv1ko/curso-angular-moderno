@@ -1,6 +1,16 @@
-<h1>{{ activity | activityTitle }}</h1>
-<div>
-  <p>{{ activity.price | currency }}</p>
-  <p>{{ activity.date | date:"dd-MMM-yyyy" }}</p>
-  <p>{{ activity.status | uppercase }}</p>
-</div>
+<article>
+  <header>
+    <h2>{{ activity | activityTitle }}</h2>
+    <div [className]="activity.status">
+      <span>{{ activity.date | date:"dd-MMM-yyyy" }}</span>
+      <span>{{ activity.status | uppercase }}</span>
+      <span>{{ activity.price | currency }}</span>
+    </div>
+  </header>
+  <main>
+    <div>Already Participants: {{ currentParticipants }}</div>
+  </main>
+  <footer>
+    <button>Book now!</button>
+  </footer>
+</article>
