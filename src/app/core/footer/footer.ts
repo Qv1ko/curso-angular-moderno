@@ -1,8 +1,9 @@
+import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'qv1-footer',
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './footer.html',
   styleUrl: './footer.css',
 })
@@ -12,7 +13,7 @@ export class Footer {
     github: 'https://github.com/Qv1ko',
   };
 
-  year = new Date().getFullYear();
+  today = new Date();
 
   onCookiesAccepted() {
     console.info('Cookies accepted');
