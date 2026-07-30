@@ -10,6 +10,13 @@
   <main>
     <h4>Participants</h4>
     <div>Already participants: {{ currentParticipants }}</div>
+    <div>
+      @for(participant of participants(); track participant.id){
+      <span>{{ participant.id }}</span>
+      } @empty {
+      <span>No participants yet</span>
+      }
+    </div>
     <ul>
       <li>New participants: {{ newParticipants() }}</li>
       <li>Total participants: {{ totalParticipants() }}</li>
@@ -19,19 +26,21 @@
   <footer>
     <h4>New Bookings</h4>
     @if (remainingPlaces() > 0) {
-      <label for="newParticipants">How many participants want to book?</label>
-      <input
-        type="number"
-        [ngModel]="newParticipants()"
-        (ngModelChange)="onNewParticipantsChange($event)"
-        min="0"
-        [max]="maxNewParticipants"
-      />
+    <label for="newParticipants">How many participants want to book?</label>
+    <input
+      type="number"
+      [ngModel]="newParticipants()"
+      (ngModelChange)="onNewParticipantsChange($event)"
+      min="0"
+      [max]="maxNewParticipants"
+    />
     } @else {
-      <span>Sorry, no more places available!</span>
-      <button class="secondary outline" (click)="onNewParticipantsChange(0)">Reset</button>
+    <span>Sorry, no more places available!</span>
+    <button class="secondary outline" (click)="onNewParticipantsChange(0)">Reset</button>
     }
-    <button [disabled]="booked() || remainingPlaces() <= 0" (click)="onBookClick()">Book now!</button>
+    <button [disabled]="booked() || remainingPlaces() <= 0" (click)="onBookClick()">
+      Book now!
+    </button>
     {{ booked() ? 'Booked!' : '' }}
   </footer>
 </article>

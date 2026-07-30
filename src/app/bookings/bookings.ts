@@ -29,8 +29,12 @@ export class Bookings {
   readonly currentParticipants = 3;
   readonly maxNewParticipants = this.activity.maxParticipants - this.currentParticipants;
 
+  readonly participants = signal<{ id: number }[]>([{ id: 1 }, { id: 2 }, { id: 3 }]);
+
   readonly totalParticipants = computed(() => this.currentParticipants + this.newParticipants());
-  readonly remainingPlaces = computed(() => this.activity.maxParticipants - this.totalParticipants());
+  readonly remainingPlaces = computed(
+    () => this.activity.maxParticipants - this.totalParticipants(),
+  );
 
   readonly newParticipants = signal(0);
   readonly booked = signal(false);
@@ -52,6 +56,15 @@ export class Bookings {
 
   onNewParticipantsChange(newParticipants: number) {
     this.newParticipants.set(newParticipants);
+    this.participants.update((participants) => {
+      participants = participants.slice(0, this.currentParticipants);
+
+      for (let i = 0; i < newParticipants; i++) {
+        participants.push({ id: participants.length + 1 });
+      }
+
+      return participants;
+    });
   }
 
   onBookClick() {
