@@ -1,7 +1,7 @@
 <article>
   <header>
     <h2>{{ activity | activityTitle }}</h2>
-    <div [className]="activity.status">
+    <div [class]="activity.status">
       <span>{{ activity.date | date:"dd-MMM-yyyy" }}</span>
       <span>{{ activity.status | uppercase }}</span>
       <span>{{ activity.price | currency }}</span>
@@ -18,15 +18,20 @@
   </main>
   <footer>
     <h4>New Bookings</h4>
-    <label for="newParticipants">How many participants want to book?</label>
-    <input
-      type="number"
-      [ngModel]="newParticipants()"
-      (ngModelChange)="onNewParticipantsChange($event)"
-      min="0"
-      [max]="maxNewParticipants"
-    />
-    <button [disabled]="booked()" (click)="onBookClick()">Book now!</button>
+    @if (remainingPlaces() > 0) {
+      <label for="newParticipants">How many participants want to book?</label>
+      <input
+        type="number"
+        [ngModel]="newParticipants()"
+        (ngModelChange)="onNewParticipantsChange($event)"
+        min="0"
+        [max]="maxNewParticipants"
+      />
+    } @else {
+      <span>Sorry, no more places available!</span>
+      <button class="secondary outline" (click)="onNewParticipantsChange(0)">Reset</button>
+    }
+    <button [disabled]="booked() || remainingPlaces() <= 0" (click)="onBookClick()">Book now!</button>
     {{ booked() ? 'Booked!' : '' }}
   </footer>
 </article>
