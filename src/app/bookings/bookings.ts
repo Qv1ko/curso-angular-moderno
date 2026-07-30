@@ -1,5 +1,5 @@
 import { CurrencyPipe, DatePipe, UpperCasePipe } from '@angular/common';
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, effect, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { Activity } from '../domain/activity.type';
@@ -12,7 +12,7 @@ import { ActivityTitlePipe } from './activity-title-pipe';
   styleUrl: './bookings.css',
 })
 export class Bookings {
-  activity: Activity = {
+  readonly activity: Activity = {
     name: 'Padel surf',
     location: 'Lake Leman at Lausanne',
     price: 100,
@@ -34,6 +34,21 @@ export class Bookings {
 
   readonly newParticipants = signal(0);
   readonly booked = signal(false);
+
+  constructor() {
+    effect(() => {
+      const totalParticipants = this.totalParticipants();
+      const activity = this.activity;
+
+      if (totalParticipants >= activity.maxParticipants) {
+        activity.status = 'sold-out';
+      } else if (totalParticipants >= activity.minParticipants) {
+        activity.status = 'confirmed';
+      } else {
+        activity.status = 'published';
+      }
+    });
+  }
 
   onNewParticipantsChange(newParticipants: number) {
     this.newParticipants.set(newParticipants);
