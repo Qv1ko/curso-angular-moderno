@@ -9,8 +9,12 @@
   </header>
   <main>
     <h4>Participants</h4>
-    <div>Already Participants: {{ currentParticipants }}</div>
-    <div>New Participants: {{ newParticipants() }}</div>
+    <div>Already participants: {{ currentParticipants }}</div>
+    <ul>
+      <li>New participants: {{ newParticipants() }}</li>
+      <li>Total participants: {{ totalParticipants() }}</li>
+      <li>Remaining places: {{ remainingPlaces() }}</li>
+    </ul>
   </main>
   <footer>
     <h4>New Bookings</h4>
@@ -19,6 +23,8 @@
       type="number"
       [ngModel]="newParticipants()"
       (ngModelChange)="onNewParticipantsChange($event)"
+      min="0"
+      [max]="maxNewParticipants"
     />
     <button [disabled]="booked()" (click)="onBookClick()">Book now!</button>
     {{ booked() ? 'Booked!' : '' }}
