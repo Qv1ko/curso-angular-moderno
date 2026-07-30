@@ -1,6 +1,10 @@
 <footer>
   <nav>
     <a [href]="author.github" target="_blank">© {{ today | date:'yyyy' }} {{ author.nickname }} </a>
+    @if (cookiesAccepted()) {
+    <span>Cookies accepted</span>
+    } @else {
     <button (click)="onCookiesAccepted()">Accept Cookies</button>
+    }
   </nav>
 </footer>
