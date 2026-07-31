@@ -10,7 +10,7 @@ import { ActivityTitlePipe } from './activity-title-pipe';
   templateUrl: './bookings.html',
   styleUrl: './bookings.css',
 })
-export class Bookings {
+export default class Bookings {
   readonly activity: Activity = {
     name: 'Padel surf',
     location: 'Lake Leman at Lausanne',
