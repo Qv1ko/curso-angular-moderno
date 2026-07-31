@@ -6,7 +6,6 @@ import { Activity } from '../domain/activity.type';
 import { ActivityTitlePipe } from './activity-title-pipe';
 
 @Component({
-  selector: 'qv1-bookings',
   imports: [CurrencyPipe, DatePipe, UpperCasePipe, ActivityTitlePipe, FormsModule],
   templateUrl: './bookings.html',
   styleUrl: './bookings.css',
