@@ -7,10 +7,10 @@ import { ActivityTitlePipe } from './activity-title-pipe';
 
 @Component({
   imports: [CurrencyPipe, DatePipe, UpperCasePipe, ActivityTitlePipe, FormsModule],
-  templateUrl: './bookings.html',
-  styleUrl: './bookings.css',
+  templateUrl: './bookings.page.html',
+  styleUrl: './bookings.page.css',
 })
-export default class Bookings {
+export default class BookingsPage {
   readonly activity: Activity = {
     name: 'Padel surf',
     location: 'Lake Leman at Lausanne',

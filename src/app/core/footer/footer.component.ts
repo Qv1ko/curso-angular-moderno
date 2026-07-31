@@ -4,10 +4,10 @@ import { Component, signal } from '@angular/core';
 @Component({
   selector: 'qv1-footer',
   imports: [DatePipe],
-  templateUrl: './footer.html',
-  styleUrl: './footer.css',
+  templateUrl: './footer.component.html',
+  styleUrl: './footer.component.css',
 })
-export class Footer {
+export class FooterComponent {
   author = {
     nickname: 'Qv1ko',
     github: 'https://github.com/Qv1ko',
