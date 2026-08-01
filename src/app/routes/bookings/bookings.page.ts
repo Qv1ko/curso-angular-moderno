@@ -2,7 +2,7 @@ import { CurrencyPipe, DatePipe, UpperCasePipe } from '@angular/common';
 import { Component, computed, effect, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { Activity } from '../domain/activity.type';
+import { Activity } from '../../domain/activity.type';
 import { ActivityTitlePipe } from './activity-title-pipe';
 
 @Component({

@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { Activity } from '../domain/activity.type';
+import { Activity } from '../../domain/activity.type';
 
 @Pipe({
   name: 'activityTitle',
