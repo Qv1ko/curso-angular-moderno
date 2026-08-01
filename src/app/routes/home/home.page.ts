@@ -1,8 +1,8 @@
+import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import { ACTIVITIES } from '../../domain/activities.data';
-import { RouterLink } from "@angular/router";
-import { CurrencyPipe, DatePipe } from '@angular/common';
 
 @Component({
   imports: [RouterLink, CurrencyPipe, DatePipe],

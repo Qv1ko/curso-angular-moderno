@@ -3,7 +3,7 @@ import { Component, computed, effect, input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ACTIVITIES } from '../../domain/activities.data';
-import { Activity, NULL_ACTIVITY } from '../../domain/activity.type';
+import { NULL_ACTIVITY } from '../../domain/activity.type';
 import { ActivityTitlePipe } from './activity-title-pipe';
 
 @Component({

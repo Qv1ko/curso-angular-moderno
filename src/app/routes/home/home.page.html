@@ -1,15 +1,15 @@
 <article>
-    <h2>Activities</h2>
-    <main>
-        @for (activity of activities; track activity.id) {
-            <div>
-                <span>
-                    <a [routerLink]="['/bookings', activity.slug]">{{ activity.name }}</a>
-                </span>
-                <span>{{ activity.location }}</span>
-                <span>{{ activity.price | currency }}</span>
-                <span>{{ activity.date | date: 'dd-MM-yyyy' }}</span>
-            </div>
-        }
-    </main>
+  <h2>Activities</h2>
+  <main>
+    @for (activity of activities; track activity.id) {
+    <div>
+      <span>
+        <a [routerLink]="['/bookings', activity.slug]">{{ activity.name }}</a>
+      </span>
+      <span>{{ activity.location }}</span>
+      <span>{{ activity.price | currency }}</span>
+      <span>{{ activity.date | date: 'dd-MM-yyyy' }}</span>
+    </div>
+    }
+  </main>
 </article>
