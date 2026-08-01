@@ -1,9 +1,9 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import { Meta, Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 
 import { ACTIVITIES } from '../../domain/activities.data';
-import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   imports: [RouterLink, CurrencyPipe, DatePipe],
@@ -17,7 +17,7 @@ export default class HomePage {
   activities = ACTIVITIES;
 
   constructor() {
-    this.#title.setTitle('Activities to book')
-    this.#meta.updateTag({ name: 'description', content: 'Book your favorite activities' })
+    this.#title.setTitle('Activities to book');
+    this.#meta.updateTag({ name: 'description', content: 'Book your favorite activities' });
   }
 }

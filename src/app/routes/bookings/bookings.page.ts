@@ -1,11 +1,11 @@
 import { CurrencyPipe, DatePipe, UpperCasePipe } from '@angular/common';
 import { Component, computed, effect, inject, input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Meta, Title } from '@angular/platform-browser';
 
 import { ACTIVITIES } from '../../domain/activities.data';
 import { NULL_ACTIVITY } from '../../domain/activity.type';
 import { ActivityTitlePipe } from './activity-title-pipe';
-import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   imports: [CurrencyPipe, DatePipe, UpperCasePipe, ActivityTitlePipe, FormsModule],
@@ -36,11 +36,11 @@ export default class BookingsPage {
     effect(() => {
       const activity = this.activity();
 
-      this.#title.setTitle(activity.name)
+      this.#title.setTitle(activity.name);
 
       const description = `${activity.name} in ${activity.location} on ${activity.date} for ${activity.price}`;
-      this.#meta.updateTag({ name: 'description', content: description })
-    })
+      this.#meta.updateTag({ name: 'description', content: description });
+    });
 
     effect(() => {
       const totalParticipants = this.totalParticipants();
