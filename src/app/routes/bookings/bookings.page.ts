@@ -1,10 +1,11 @@
 import { CurrencyPipe, DatePipe, UpperCasePipe } from '@angular/common';
-import { Component, computed, effect, input, signal } from '@angular/core';
+import { Component, computed, effect, inject, input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ACTIVITIES } from '../../domain/activities.data';
 import { NULL_ACTIVITY } from '../../domain/activity.type';
 import { ActivityTitlePipe } from './activity-title-pipe';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   imports: [CurrencyPipe, DatePipe, UpperCasePipe, ActivityTitlePipe, FormsModule],
@@ -12,8 +13,10 @@ import { ActivityTitlePipe } from './activity-title-pipe';
   styleUrl: './bookings.page.css',
 })
 export default class BookingsPage {
-  slug = input<string>();
+  #title = inject(Title);
+  #meta = inject(Meta);
 
+  slug = input<string>();
   activity = computed(() => ACTIVITIES.find((a) => a.slug === this.slug()) || NULL_ACTIVITY);
 
   readonly currentParticipants = 3;
@@ -30,6 +33,15 @@ export default class BookingsPage {
   readonly booked = signal(false);
 
   constructor() {
+    effect(() => {
+      const activity = this.activity();
+
+      this.#title.setTitle(activity.name)
+
+      const description = `${activity.name} in ${activity.location} on ${activity.date} for ${activity.price}`;
+      this.#meta.updateTag({ name: 'description', content: description })
+    })
+
     effect(() => {
       const totalParticipants = this.totalParticipants();
       const activity = this.activity();
