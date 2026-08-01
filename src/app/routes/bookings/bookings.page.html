@@ -1,3 +1,4 @@
+@if (activity(); as activity) {
 <article>
   <header>
     <h2>{{ activity | activityTitle }}</h2>
@@ -44,3 +45,4 @@
     {{ booked() ? 'Booked!' : '' }}
   </footer>
 </article>
+}

@@ -1,8 +1,9 @@
 import { CurrencyPipe, DatePipe, UpperCasePipe } from '@angular/common';
-import { Component, computed, effect, signal } from '@angular/core';
+import { Component, computed, effect, input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { Activity } from '../../domain/activity.type';
+import { ACTIVITIES } from '../../domain/activities.data';
+import { Activity, NULL_ACTIVITY } from '../../domain/activity.type';
 import { ActivityTitlePipe } from './activity-title-pipe';
 
 @Component({
@@ -11,28 +12,18 @@ import { ActivityTitlePipe } from './activity-title-pipe';
   styleUrl: './bookings.page.css',
 })
 export default class BookingsPage {
-  readonly activity: Activity = {
-    name: 'Padel surf',
-    location: 'Lake Leman at Lausanne',
-    price: 100,
-    date: new Date(2025, 7, 29),
-    minParticipants: 4,
-    maxParticipants: 10,
-    status: 'draft',
-    id: 1,
-    slug: 'paddle-surf',
-    duration: 2,
-    userId: 1,
-  };
+  slug = input<string>();
+
+  activity = computed(() => ACTIVITIES.find((a) => a.slug === this.slug()) || NULL_ACTIVITY);
 
   readonly currentParticipants = 3;
-  readonly maxNewParticipants = this.activity.maxParticipants - this.currentParticipants;
+  readonly maxNewParticipants = this.activity().maxParticipants - this.currentParticipants;
 
   readonly participants = signal<{ id: number }[]>([{ id: 1 }, { id: 2 }, { id: 3 }]);
 
   readonly totalParticipants = computed(() => this.currentParticipants + this.newParticipants());
   readonly remainingPlaces = computed(
-    () => this.activity.maxParticipants - this.totalParticipants(),
+    () => this.activity().maxParticipants - this.totalParticipants(),
   );
 
   readonly newParticipants = signal(0);
@@ -41,7 +32,7 @@ export default class BookingsPage {
   constructor() {
     effect(() => {
       const totalParticipants = this.totalParticipants();
-      const activity = this.activity;
+      const activity = this.activity();
 
       if (totalParticipants >= activity.maxParticipants) {
         activity.status = 'sold-out';
