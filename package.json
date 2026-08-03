@@ -13,6 +13,9 @@
     "test": "ng test",
     "serve:ssr:ActivityBookings": "node dist/ActivityBookings/server/server.mjs",
     "serve": "npm run build && npm run serve:ssr:ActivityBookings",
+    "api": "json-server-auth ./db/prod/d.json -r ./db/r.json",
+    "api:reset": "copyfiles -f ./db/reset/d.json ./db/prod && npm run api",
+    "api:seed": "copyfiles -f ./db/seed/d.json ./db/prod && npm run api",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "fmt": "oxfmt"
@@ -27,6 +30,7 @@
     "@angular/router": "^22.0.0",
     "@angular/ssr": "^22.0.8",
     "@picocss/pico": "^2.1.1",
+    "copyfiles": "^2.4.1",
     "express": "^5.1.0",
     "json-server": "^1.0.0-beta.15",
     "json-server-auth": "^2.1.0",
