@@ -1,11 +1,10 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 
-import { ACTIVITIES } from '../../domain/activities.data';
 import { Activity } from '../../domain/activity.type';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   imports: [RouterLink, CurrencyPipe, DatePipe],
@@ -26,7 +25,7 @@ export default class HomePage {
     this.#meta.updateTag({ name: 'description', content: 'Book your favorite activities' });
 
     this.httpClient$.get<Activity[]>(this.apiUrl).subscribe({
-      next: (activities) => this.activities = activities,
+      next: (activities) => (this.activities = activities),
       error: (err) => console.error(err),
     });
   }
