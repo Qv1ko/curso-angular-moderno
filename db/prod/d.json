@@ -101,7 +101,7 @@
       "date": "2024-05-11",
       "maxParticipants": 8,
       "minParticipants": 4,
-      "status": "draft",
+      "status": "confirmed",
       "userId": 2
     },
     {
@@ -222,7 +222,20 @@
       "userId": 2
     }
   ],
-  "bookings": [],
+  "bookings": [
+    {
+      "id": 1,
+      "userId": 0,
+      "activityId": 8,
+      "date": "2026-08-04T20:51:07.693Z",
+      "participants": 4,
+      "payment": {
+        "method": "creditCard",
+        "amount": 480,
+        "status": "pending"
+      }
+    }
+  ],
   "users": [
     {
       "email": "richard@virg.in",

@@ -1,10 +1,10 @@
 import { CurrencyPipe, DatePipe, UpperCasePipe } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component, computed, effect, inject, input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Meta, Title } from '@angular/platform-browser';
 
-import { ACTIVITIES } from '../../domain/activities.data';
-import { NULL_ACTIVITY } from '../../domain/activity.type';
+import { Activity, NULL_ACTIVITY } from '../../domain/activity.type';
 import { ActivityTitlePipe } from './activity-title-pipe';
 
 @Component({
@@ -13,26 +13,38 @@ import { ActivityTitlePipe } from './activity-title-pipe';
   styleUrl: './bookings.page.css',
 })
 export default class BookingsPage {
+  private httpClient$: HttpClient = inject(HttpClient);
+  private activitiesUrl: string = 'http://localhost:3000/activities';
+  private bookingsUrl: string = 'http://localhost:3000/bookings';
+
   #title = inject(Title);
   #meta = inject(Meta);
 
   slug = input<string>();
-  activity = computed(() => ACTIVITIES.find((a) => a.slug === this.slug()) || NULL_ACTIVITY);
+
+  private activities = signal<Activity[]>([]);
+  activity = computed(() => this.activities().find((a) => a.slug === this.slug()) ?? NULL_ACTIVITY);
 
   readonly currentParticipants = 3;
   readonly maxNewParticipants = this.activity().maxParticipants - this.currentParticipants;
+  readonly isBookable = computed(() => ['published', 'confirmed'].includes(this.activity().status));
 
-  readonly participants = signal<{ id: number }[]>([{ id: 1 }, { id: 2 }, { id: 3 }]);
+  readonly newParticipants = signal(0);
+  readonly booked = signal(false);
+  readonly participants = signal<{ id: number }[]>([]);
 
   readonly totalParticipants = computed(() => this.currentParticipants + this.newParticipants());
   readonly remainingPlaces = computed(
     () => this.activity().maxParticipants - this.totalParticipants(),
   );
-
-  readonly newParticipants = signal(0);
-  readonly booked = signal(false);
+  readonly bookingAmount = computed(() => this.newParticipants() * this.activity().price);
 
   constructor() {
+    this.httpClient$.get<Activity[]>(this.activitiesUrl).subscribe({
+      next: (activities) => this.activities.set(activities),
+      error: (err) => console.error('Error fetching activities:', err),
+    });
+
     effect(() => {
       const activity = this.activity();
 
@@ -71,5 +83,35 @@ export default class BookingsPage {
 
   onBookClick() {
     this.booked.set(true);
+
+    const newBooking = {
+      id: 0,
+      userId: 0,
+      activityId: this.activity().id,
+      date: new Date(),
+      participants: this.newParticipants(),
+      payment: {
+        method: 'creditCard',
+        amount: this.bookingAmount(),
+        status: 'pending',
+      },
+    };
+
+    this.httpClient$.post(this.bookingsUrl, newBooking).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.updateActivityStatus();
+      },
+      error: (err) => console.error('Error creating booking:', err),
+    });
+  }
+
+  private updateActivityStatus() {
+    const activityUrl = `${this.activitiesUrl}/${this.activity().id}`;
+
+    this.httpClient$.put(activityUrl, this.activity()).subscribe({
+      next: (_) => console.log('Activity status updated'),
+      error: (error) => console.error('Error updating activity: ', error),
+    });
   }
 }

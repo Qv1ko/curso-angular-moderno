@@ -1,7 +1,7 @@
 <article>
   <h2>Activities</h2>
   <main>
-    @for (activity of activities; track activity.id) {
+    @for (activity of activities(); track activity.id) {
     <div>
       <span>
         <a [routerLink]="['/bookings', activity.slug]">{{ activity.name }}</a>
