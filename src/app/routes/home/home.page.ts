@@ -1,6 +1,6 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { afterNextRender, Component, inject, signal } from '@angular/core';
+import { afterNextRender, ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 
@@ -10,6 +10,7 @@ import { Activity } from '../../domain/activity.type';
   imports: [RouterLink, CurrencyPipe, DatePipe],
   templateUrl: './home.page.html',
   styleUrl: './home.page.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class HomePage {
   private httpClient$: HttpClient = inject(HttpClient);
@@ -24,11 +25,9 @@ export default class HomePage {
     this.#title.setTitle('Activities to book');
     this.#meta.updateTag({ name: 'description', content: 'Book your favorite activities' });
 
-    afterNextRender(() => {
-      this.httpClient$.get<Activity[]>(this.apiUrl).subscribe({
-        next: (activities) => this.activities.set(activities),
-        error: (err) => console.error(err),
-      });
+    this.httpClient$.get<Activity[]>(this.apiUrl).subscribe({
+      next: (activities) => this.activities.set(activities),
+      error: (err) => console.error(err),
     });
   }
 }
