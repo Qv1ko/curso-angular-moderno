@@ -1,6 +1,6 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { afterNextRender, ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 
@@ -10,7 +10,7 @@ import { Activity } from '../../domain/activity.type';
   imports: [RouterLink, CurrencyPipe, DatePipe],
   templateUrl: './home.page.html',
   styleUrl: './home.page.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class HomePage {
   private httpClient$: HttpClient = inject(HttpClient);
