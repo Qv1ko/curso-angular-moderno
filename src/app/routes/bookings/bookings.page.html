@@ -3,7 +3,7 @@
   <header>
     <h2>{{ activity | activityTitle }}</h2>
     <div [class]="activity.status">
-      <span>{{ activity.date | date:"dd-MMM-yyyy" }}</span>
+      <span>{{ activity.date | date: 'dd-MMM-yyyy' }}</span>
       <span>{{ activity.status | uppercase }}</span>
       <span>{{ activity.price | currency }}</span>
     </div>
@@ -12,7 +12,7 @@
     <h4>Participants</h4>
     <div>Already participants: {{ currentParticipants }}</div>
     <div>
-      @for(participant of participants(); track participant.id){
+      @for (participant of participants(); track participant.id) {
       <span>{{ participant.id }}</span>
       } @empty {
       <span>No participants yet</span>
@@ -42,7 +42,7 @@
     <button [disabled]="booked() || remainingPlaces() <= 0" (click)="onBookClick()">
       Book now!
     </button>
-    {{ booked() ? 'Booked!' : '' }}
+    {{ booked() ? bookedMessage() : '' }}
   </footer>
 </article>
 }

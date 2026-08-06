@@ -21,9 +21,7 @@ export default class BookingsPage {
   #meta = inject(Meta);
 
   slug = input<string>();
-
-  private activities = signal<Activity[]>([]);
-  activity = computed(() => this.activities().find((a) => a.slug === this.slug()) ?? NULL_ACTIVITY);
+  activity = signal<Activity>(NULL_ACTIVITY);
 
   readonly currentParticipants = 3;
   readonly maxNewParticipants = this.activity().maxParticipants - this.currentParticipants;
@@ -39,11 +37,24 @@ export default class BookingsPage {
   );
   readonly bookingAmount = computed(() => this.newParticipants() * this.activity().price);
 
+  readonly bookedMessage = computed(() => {
+    if (this.booked()) return `Booked USD ${this.bookingAmount}`;
+    return '';
+  });
+
   constructor() {
-    this.httpClient$.get<Activity[]>(this.activitiesUrl).subscribe({
-      next: (activities) => this.activities.set(activities),
-      error: (err) => console.error('Error fetching activities:', err),
-    });
+    effect(
+      () => {
+        const activityUrl = `${this.activitiesUrl}?slug=${this.slug()}`;
+        this.httpClient$.get<Activity[]>(activityUrl).subscribe({
+          next: (activities) => this.activity.set(activities[0] || NULL_ACTIVITY),
+          error: (err) => console.error('Error fetching activity:', err),
+        });
+      },
+      {
+        allowSignalWrites: true,
+      },
+    );
 
     effect(() => {
       const activity = this.activity();
