@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, computed, effect, inject, input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Meta, Title } from '@angular/platform-browser';
+import { catchError, map, of } from 'rxjs';
 
 import { Activity, NULL_ACTIVITY } from '../../domain/activity.type';
 import { ActivityTitlePipe } from './activity-title-pipe';
@@ -46,10 +47,16 @@ export default class BookingsPage {
     effect(
       () => {
         const activityUrl = `${this.activitiesUrl}?slug=${this.slug()}`;
-        this.httpClient$.get<Activity[]>(activityUrl).subscribe({
-          next: (activities) => this.activity.set(activities[0] || NULL_ACTIVITY),
-          error: (err) => console.error('Error fetching activity:', err),
-        });
+        this.httpClient$
+          .get<Activity[]>(activityUrl)
+          .pipe(
+            map((activities: Activity[]) => activities[0] || NULL_ACTIVITY),
+            catchError((error) => {
+              console.error('Error getting activity', error);
+              return of(NULL_ACTIVITY);
+            }),
+          )
+          .subscribe((activity: Activity) => this.activity.set(activity));
       },
       {
         allowSignalWrites: true,
