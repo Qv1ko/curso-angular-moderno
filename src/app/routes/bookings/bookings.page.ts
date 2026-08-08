@@ -1,9 +1,19 @@
 import { CurrencyPipe, DatePipe, UpperCasePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, computed, effect, inject, input, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  input,
+  InputSignal,
+  Signal,
+  signal,
+} from '@angular/core';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Meta, Title } from '@angular/platform-browser';
-import { catchError, map, of } from 'rxjs';
+import { catchError, map, Observable, of, switchMap } from 'rxjs';
 
 import { Activity, NULL_ACTIVITY } from '../../domain/activity.type';
 import { ActivityTitlePipe } from './activity-title-pipe';
@@ -21,8 +31,19 @@ export default class BookingsPage {
   #title = inject(Title);
   #meta = inject(Meta);
 
-  slug = input<string>();
-  activity = signal<Activity>(NULL_ACTIVITY);
+  slug: InputSignal<string> = input.required<string>();
+  slug$: Observable<string> = toObservable(this.slug);
+
+  activity$: Observable<Activity> = this.slug$.pipe(
+    switchMap((slug) => {
+      const activityUrl = `${this.activitiesUrl}?slug=${slug}`;
+      return this.httpClient$.get<Activity[]>(activityUrl).pipe(
+        map((activities: Activity[]) => activities[0] || NULL_ACTIVITY),
+        catchError((_) => of(NULL_ACTIVITY)),
+      );
+    }),
+  );
+  activity: Signal<Activity> = toSignal(this.activity$, { initialValue: NULL_ACTIVITY });
 
   readonly currentParticipants = 3;
   readonly maxNewParticipants = this.activity().maxParticipants - this.currentParticipants;
@@ -44,25 +65,6 @@ export default class BookingsPage {
   });
 
   constructor() {
-    effect(
-      () => {
-        const activityUrl = `${this.activitiesUrl}?slug=${this.slug()}`;
-        this.httpClient$
-          .get<Activity[]>(activityUrl)
-          .pipe(
-            map((activities: Activity[]) => activities[0] || NULL_ACTIVITY),
-            catchError((error) => {
-              console.error('Error getting activity', error);
-              return of(NULL_ACTIVITY);
-            }),
-          )
-          .subscribe((activity: Activity) => this.activity.set(activity));
-      },
-      {
-        allowSignalWrites: true,
-      },
-    );
-
     effect(() => {
       const activity = this.activity();
 
