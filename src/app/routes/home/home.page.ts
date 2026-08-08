@@ -1,12 +1,12 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, inject, Signal, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Meta, Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
-
-import { Activity, NULL_ACTIVITY } from '../../domain/activity.type';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, of } from 'rxjs';
+
+import { Activity } from '../../domain/activity.type';
 
 @Component({
   imports: [RouterLink, CurrencyPipe, DatePipe],
@@ -18,9 +18,8 @@ export default class HomePage {
   private httpClient$: HttpClient = inject(HttpClient);
   private readonly apiUrl: string = 'http://localhost:3000/activities';
   readonly activities: Signal<Activity[]> = toSignal(
-    this.httpClient$.get<Activity[]>(this.apiUrl)
-      .pipe(catchError((_) => of([]))),
-    { initialValue: [] }
+    this.httpClient$.get<Activity[]>(this.apiUrl).pipe(catchError((_) => of([]))),
+    { initialValue: [] },
   );
 
   #title = inject(Title);
