@@ -1,5 +1,5 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { Component, input, model, ModelSignal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { Activity } from '../../../domain/activity.type';
@@ -12,4 +12,15 @@ import { Activity } from '../../../domain/activity.type';
 })
 export class ActivityComponent {
   activity = input.required<Activity>();
+
+  favorites: ModelSignal<string[]> = model<string[]>([]);
+
+  toggleFavorite(slug: string) {
+    this.favorites.update((favorites) => {
+      if (favorites.includes(slug)) {
+        return favorites.filter((favorite) => favorite !== slug);
+      }
+      return favorites.concat(slug);
+    });
+  }
 }

@@ -1,5 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, inject, Signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+  Signal,
+  WritableSignal,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Meta, Title } from '@angular/platform-browser';
 import { catchError, of } from 'rxjs';
@@ -20,6 +27,8 @@ export default class HomePage {
     this.httpClient$.get<Activity[]>(this.apiUrl).pipe(catchError((_) => of([]))),
     { initialValue: [] },
   );
+
+  favorites: WritableSignal<string[]> = signal([]);
 
   #title = inject(Title);
   #meta = inject(Meta);

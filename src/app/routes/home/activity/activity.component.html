@@ -1,5 +1,13 @@
 <div>
   <span>
+    <input
+      type="checkbox"
+      name=""
+      class="secondary outline"
+      (click)="toggleFavorite(activity().slug)"
+    />
+  </span>
+  <span>
     <a [routerLink]="['/bookings', activity().slug]">{{ activity().name }}</a>
   </span>
   <span>{{ activity().location }}</span>

@@ -2,7 +2,16 @@
   <h2>Activities</h2>
   <main>
     @for (activity of activities(); track activity.id) {
-    <qv1-activity [activity]="activity" />
+    <qv1-activity [activity]="activity" [(favorites)]="favorites" />
     }
   </main>
 </article>
+<footer>
+  <small>
+    Showing
+    <mark>{{ activities().length }}</mark>
+    activities, you have selected
+    <mark>{{ favorites().length }} </mark>
+    favorites.
+  </small>
+</footer>
