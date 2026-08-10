@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'qv1-activity.component',
+  selector: 'qv1-activity',
   imports: [RouterLink, CurrencyPipe, DatePipe],
   templateUrl: './activity.component.html',
   styleUrl: './activity.component.css',

@@ -1,15 +1,14 @@
-import { CurrencyPipe, DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Meta, Title } from '@angular/platform-browser';
-import { RouterLink } from '@angular/router';
 import { catchError, of } from 'rxjs';
 
 import { Activity } from '../../domain/activity.type';
+import { ActivityComponent } from './activity/activity.component';
 
 @Component({
-  imports: [RouterLink, CurrencyPipe, DatePipe],
+  imports: [ActivityComponent],
   templateUrl: './home.page.html',
   styleUrl: './home.page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
