@@ -1,0 +1,20 @@
+<footer>
+  <nav>
+    <span>
+      <a [href]="author.github" target="_blank"
+        >© {{ today | date: "yyyy" }} {{ author.nickname }}
+      </a>
+    </span>
+    <span>
+      @switch(cookiesStatus()) { @case ('pending') {
+      <qv1-cookies (cancel)="cookiesStatus.set('rejected')" (accept)="cookiesStatus.set($event)" />
+      } @case ('rejected') {
+      <small>🍪❌</small>
+      } @case ('essentials') {
+      <small>🍪✅</small>
+      } @case ('all') {
+      <small>🍪✅✅</small>
+      } }
+    </span>
+  </nav>
+</footer>

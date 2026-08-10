@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
-import { FooterComponent } from './core/footer/footer.component';
+import { FooterWidget } from './core/footer/footer.widget';
 import { HeaderComponent } from './core/header/header.component';
 
 @Component({
   selector: 'qv1-root',
-  imports: [RouterOutlet, HeaderComponent, FooterComponent],
+  imports: [RouterOutlet, HeaderComponent, FooterWidget],
   template: `
     <qv1-header />
     <router-outlet />
