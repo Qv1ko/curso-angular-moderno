@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -13,6 +12,7 @@ import { catchError, of } from 'rxjs';
 
 import { Activity } from '../../domain/activity.type';
 import { ActivityComponent } from './activity/activity.component';
+import { HomeService } from './home.service';
 
 @Component({
   imports: [ActivityComponent],
@@ -21,10 +21,10 @@ import { ActivityComponent } from './activity/activity.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class HomePage {
-  private httpClient$: HttpClient = inject(HttpClient);
-  private readonly apiUrl: string = 'http://localhost:3000/activities';
+  private homeService = inject(HomeService);
+
   readonly activities: Signal<Activity[]> = toSignal(
-    this.httpClient$.get<Activity[]>(this.apiUrl).pipe(catchError((_) => of([]))),
+    this.homeService.getActivities().pipe(catchError((_) => of([]))),
     { initialValue: [] },
   );
 
