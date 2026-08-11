@@ -1,15 +1,12 @@
-import { HttpClient } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
-import { Observable } from 'rxjs';
 
-import { Activity } from '../../domain/activity.type';
+import { ActivitiesService } from '@api/activities.service';
 
 @Service()
 export class HomeService {
-  private httpClient$: HttpClient = inject(HttpClient);
-  private readonly apiUrl: string = 'http://localhost:3000/activities';
+  private activitiesService = inject(ActivitiesService);
 
-  getActivities(): Observable<Activity[]> {
-    return this.httpClient$.get<Activity[]>(this.apiUrl);
+  getActivities() {
+    return this.activitiesService.getActivities();
   }
 }
