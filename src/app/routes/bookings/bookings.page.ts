@@ -17,6 +17,8 @@ import { catchError, map, Observable, of, switchMap } from 'rxjs';
 
 import { Activity, NULL_ACTIVITY } from '../../domain/activity.type';
 import { ActivityTitlePipe } from './activity-title-pipe';
+import { ActivitiesService } from '@api/activities.service';
+import { toSignalMap } from '@api/signal.functions';
 
 @Component({
   imports: [CurrencyPipe, DatePipe, UpperCasePipe, ActivityTitlePipe, FormsModule],
@@ -25,25 +27,19 @@ import { ActivityTitlePipe } from './activity-title-pipe';
 })
 export default class BookingsPage {
   private httpClient$: HttpClient = inject(HttpClient);
-  private activitiesUrl: string = 'http://localhost:3000/activities';
   private bookingsUrl: string = 'http://localhost:3000/bookings';
+  private activitiesService = inject(ActivitiesService);
 
   #title = inject(Title);
   #meta = inject(Meta);
 
   slug: InputSignal<string> = input.required<string>();
-  slug$: Observable<string> = toObservable(this.slug);
 
-  activity$: Observable<Activity> = this.slug$.pipe(
-    switchMap((slug) => {
-      const activityUrl = `${this.activitiesUrl}?slug=${slug}`;
-      return this.httpClient$.get<Activity[]>(activityUrl).pipe(
-        map((activities: Activity[]) => activities[0] || NULL_ACTIVITY),
-        catchError((_) => of(NULL_ACTIVITY)),
-      );
-    }),
+  activity: Signal<Activity> = toSignalMap(
+    this.slug,
+    (slug) => this.activitiesService.getActivityBySlug(slug),
+    NULL_ACTIVITY
   );
-  activity: Signal<Activity> = toSignal(this.activity$, { initialValue: NULL_ACTIVITY });
 
   readonly currentParticipants = 3;
   readonly maxNewParticipants = this.activity().maxParticipants - this.currentParticipants;
@@ -127,11 +123,8 @@ export default class BookingsPage {
   }
 
   private updateActivityStatus() {
-    const activityUrl = `${this.activitiesUrl}/${this.activity().id}`;
-
-    this.httpClient$.put(activityUrl, this.activity()).subscribe({
-      next: (_) => console.log('Activity status updated'),
-      error: (error) => console.error('Error updating activity: ', error),
-    });
+    this.activitiesService
+      .putActivity(this.activity())
+      .subscribe((_) => console.log('Activity status updated'));
   }
 }
