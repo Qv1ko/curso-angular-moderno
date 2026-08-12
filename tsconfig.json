@@ -15,6 +15,7 @@
     "module": "preserve",
     "rootDir": ".",
     "paths": {
+      "@domain/*": ["./src/app/shared/domain/*"],
       "@api/*": ["./src/app/shared/api/*"]
     }
   },

@@ -10,15 +10,13 @@ import {
   Signal,
   signal,
 } from '@angular/core';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Meta, Title } from '@angular/platform-browser';
-import { catchError, map, Observable, of, switchMap } from 'rxjs';
-
-import { Activity, NULL_ACTIVITY } from '../../domain/activity.type';
-import { ActivityTitlePipe } from './activity-title-pipe';
 import { ActivitiesService } from '@api/activities.service';
 import { toSignalMap } from '@api/signal.functions';
+import { Activity, NULL_ACTIVITY } from '@domain/activity.type';
+
+import { ActivityTitlePipe } from './activity-title-pipe';
 
 @Component({
   imports: [CurrencyPipe, DatePipe, UpperCasePipe, ActivityTitlePipe, FormsModule],
@@ -38,7 +36,7 @@ export default class BookingsPage {
   activity: Signal<Activity> = toSignalMap(
     this.slug,
     (slug) => this.activitiesService.getActivityBySlug(slug),
-    NULL_ACTIVITY
+    NULL_ACTIVITY,
   );
 
   readonly currentParticipants = 3;

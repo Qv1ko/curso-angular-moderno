@@ -8,9 +8,9 @@ import {
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Meta, Title } from '@angular/platform-browser';
+import { Activity } from '@domain/activity.type';
 import { catchError, of } from 'rxjs';
 
-import { Activity } from '../../domain/activity.type';
 import { ActivityComponent } from './activity/activity.component';
 import { HomeService } from './home.service';
 

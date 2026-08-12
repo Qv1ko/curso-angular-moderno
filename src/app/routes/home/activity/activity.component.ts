@@ -1,8 +1,7 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Component, input, model, ModelSignal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-
-import { Activity } from '../../../domain/activity.type';
+import { Activity } from '@domain/activity.type';
 
 @Component({
   selector: 'qv1-activity',
