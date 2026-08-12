@@ -13,4 +13,5 @@
   <span>{{ activity().location }}</span>
   <span>{{ activity().price | currency }}</span>
   <span>{{ activity().date | date: "dd-MM-yyyy" }}</span>
+  <qv1-activity-status [status]="activity().status" />
 </div>

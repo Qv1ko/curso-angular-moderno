@@ -1,4 +1,4 @@
-import { CurrencyPipe, DatePipe, UpperCasePipe } from '@angular/common';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import {
   Component,
@@ -16,11 +16,12 @@ import { ActivitiesService } from '@api/activities.service';
 import { toSignalMap } from '@api/signal.functions';
 import { changeActivityStatus } from '@domain/activity.functions';
 import { Activity, NULL_ACTIVITY } from '@domain/activity.type';
+import { ActivityStatusComponent } from '@ui/activity-status/activity-status.component';
 
 import { ActivityTitlePipe } from './activity-title-pipe';
 
 @Component({
-  imports: [CurrencyPipe, DatePipe, UpperCasePipe, ActivityTitlePipe, FormsModule],
+  imports: [CurrencyPipe, DatePipe, ActivityTitlePipe, FormsModule, ActivityStatusComponent],
   templateUrl: './bookings.page.html',
   styleUrl: './bookings.page.css',
 })

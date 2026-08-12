@@ -2,10 +2,11 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Component, input, model, ModelSignal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Activity } from '@domain/activity.type';
+import { ActivityStatusComponent } from '@ui/activity-status/activity-status.component';
 
 @Component({
   selector: 'qv1-activity',
-  imports: [RouterLink, CurrencyPipe, DatePipe],
+  imports: [RouterLink, CurrencyPipe, DatePipe, ActivityStatusComponent],
   templateUrl: './activity.component.html',
   styleUrl: './activity.component.css',
 })

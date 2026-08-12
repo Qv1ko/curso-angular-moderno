@@ -2,9 +2,9 @@
 <article>
   <header>
     <h2>{{ activity | activityTitle }}</h2>
-    <div [class]="activity.status">
+    <div>
       <span>{{ activity.date | date: 'dd-MMM-yyyy' }}</span>
-      <span>{{ activity.status | uppercase }}</span>
+      <qv1-activity-status [status]="activity.status" />
       <span>{{ activity.price | currency }}</span>
     </div>
   </header>

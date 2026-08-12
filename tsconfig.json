@@ -15,8 +15,9 @@
     "module": "preserve",
     "rootDir": ".",
     "paths": {
+      "@api/*": ["./src/app/shared/api/*"],
       "@domain/*": ["./src/app/shared/domain/*"],
-      "@api/*": ["./src/app/shared/api/*"]
+      "@ui/*": ["./src/app/shared/ui/*"],
     }
   },
   "angularCompilerOptions": {
