@@ -1,5 +1,4 @@
 import { inject, Service } from '@angular/core';
-
 import { ActivitiesService } from '@api/activities.service';
 
 @Service()
