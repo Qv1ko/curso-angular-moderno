@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivitiesService } from '@api/activities.service';
 import { toSignalMap } from '@api/signal.functions';
+import { changeActivityStatus } from '@domain/activity.functions';
 import { Activity, NULL_ACTIVITY } from '@domain/activity.type';
 
 import { ActivityTitlePipe } from './activity-title-pipe';
@@ -70,15 +71,7 @@ export default class BookingsPage {
 
     effect(() => {
       const totalParticipants = this.totalParticipants();
-      const activity = this.activity();
-
-      if (totalParticipants >= activity.maxParticipants) {
-        activity.status = 'sold-out';
-      } else if (totalParticipants >= activity.minParticipants) {
-        activity.status = 'confirmed';
-      } else {
-        activity.status = 'published';
-      }
+      changeActivityStatus(this.activity(), totalParticipants);
     });
   }
 
