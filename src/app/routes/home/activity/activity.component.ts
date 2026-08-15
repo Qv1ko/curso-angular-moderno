@@ -1,5 +1,5 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { Component, inject, input, model, ModelSignal } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Activity } from '@domain/activity.type';
 import { FavoritesStore } from '@state/favorites.store';
@@ -16,16 +16,14 @@ export class ActivityComponent {
 
   activity = input.required<Activity>();
 
-  favorites: ModelSignal<string[]> = model<string[]>([]);
+  favorites = this.favoritesStore.state;
 
   toggleFavorite(slug: string) {
-    this.favorites.update((favorites) => {
-      const updatedFavorites = favorites.includes(slug)
-        ? favorites.filter((favorite) => favorite !== slug)
-        : [...favorites, slug];
+    const favorites = this.favorites();
+    const updatedFavorites = favorites.includes(slug)
+      ? favorites.filter((favorite) => favorite !== slug)
+      : [...favorites, slug];
 
-      this.favoritesStore.setState(updatedFavorites);
-      return updatedFavorites;
-    });
+    this.favoritesStore.setState(updatedFavorites);
   }
 }

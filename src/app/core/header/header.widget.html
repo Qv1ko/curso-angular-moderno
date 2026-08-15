@@ -5,12 +5,10 @@
     </ul>
     <ul>
       <li>
-        <a [routerLink]="[]"
+        <a [routerLink]="['/', 'favorites']"
           >My favorites<sup><mark>{{ favCount() }}</mark></sup></a
         >
       </li>
-    </ul>
-    <ul>
       <a [routerLink]="['/auth', '/login']">Login</a>
     </ul>
   </nav>

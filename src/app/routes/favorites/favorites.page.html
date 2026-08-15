@@ -1,0 +1,6 @@
+@for (favorite of favorites(); track $index) {
+<div>{{ favorite }}</div>
+<hr />
+} @empty {
+<div>No favorites yet</div>
+}

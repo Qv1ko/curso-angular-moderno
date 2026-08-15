@@ -1,14 +1,8 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  signal,
-  Signal,
-  WritableSignal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Meta, Title } from '@angular/platform-browser';
 import { Activity } from '@domain/activity.type';
+import { FavoritesStore } from '@state/favorites.store';
 import { catchError, of } from 'rxjs';
 
 import { ActivityComponent } from './activity/activity.component';
@@ -22,13 +16,14 @@ import { HomeService } from './home.service';
 })
 export default class HomePage {
   private homeService = inject(HomeService);
+  private favoritesStore = inject(FavoritesStore);
 
   readonly activities: Signal<Activity[]> = toSignal(
     this.homeService.getActivities().pipe(catchError((_) => of([]))),
     { initialValue: [] },
   );
 
-  favorites: WritableSignal<string[]> = signal([]);
+  favorites = this.favoritesStore.state;
 
   #title = inject(Title);
   #meta = inject(Meta);

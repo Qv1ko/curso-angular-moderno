@@ -10,6 +10,10 @@ export const routes: Routes = [
     loadComponent: () => import('./routes/bookings/bookings.page'),
   },
   {
+    path: 'favorites',
+    loadComponent: () => import('./routes/favorites/favorites.page'),
+  },
+  {
     path: 'auth/login',
     loadComponent: () => import('./routes/auth/login/login.page'),
   },
