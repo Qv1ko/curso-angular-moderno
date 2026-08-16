@@ -1,5 +1,6 @@
-import { Component, computed, effect, signal, WritableSignal } from '@angular/core';
+import { Component, computed, effect, inject, signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { DEFAULT_FILTER, SortOrders } from '@domain/filter.type';
 
 @Component({
@@ -20,6 +21,7 @@ export class FilterWidget {
   }));
 
   constructor() {
-    effect(() => console.log('Current filter', this.filter()));
+    const router = inject(Router);
+    effect(() => router.navigate([], { queryParams: this.filter() }));
   }
 }
