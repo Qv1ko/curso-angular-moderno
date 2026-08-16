@@ -1,0 +1,18 @@
+<form>
+  <input type="search" name="search" [(ngModel)]="search" placeholder="Search..." />
+  <fieldset class="grid">
+    <select name="orderBy" [(ngModel)]="orderBy" aria-label="Choose field to sort by...">
+      <option value="id">Sort by ID</option>
+      <option value="name">Sort by Name</option>
+      <option value="date">Sort by Date</option>
+      <option value="price">Sort by Price</option>
+    </select>
+    <fieldset>
+      <legend>Sort order:</legend>
+      <input type="radio" name="sort" id="asc" value="asc" [(ngModel)]="sort" />
+      <label for="asc">Ascending</label>
+      <input type="radio" name="sort" id="desc" value="desc" [(ngModel)]="sort" />
+      <label for="desc">Descending</label>
+    </fieldset>
+  </fieldset>
+</form>

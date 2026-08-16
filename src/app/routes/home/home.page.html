@@ -1,5 +1,8 @@
 <article>
-  <h2>Activities</h2>
+  <header>
+    <h2>Activities</h2>
+    <qv1-filter />
+  </header>
   <main>
     @for (activity of activities(); track activity.id) {
     <qv1-activity [activity]="activity" />

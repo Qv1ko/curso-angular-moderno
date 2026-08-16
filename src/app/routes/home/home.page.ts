@@ -3,13 +3,14 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { Meta, Title } from '@angular/platform-browser';
 import { Activity } from '@domain/activity.type';
 import { FavoritesStore } from '@state/favorites.store';
+import { FilterWidget } from '@ui/filter/filter.widget';
 import { catchError, of } from 'rxjs';
 
 import { ActivityComponent } from './activity/activity.component';
 import { HomeService } from './home.service';
 
 @Component({
-  imports: [ActivityComponent],
+  imports: [ActivityComponent, FilterWidget],
   templateUrl: './home.page.html',
   styleUrl: './home.page.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
