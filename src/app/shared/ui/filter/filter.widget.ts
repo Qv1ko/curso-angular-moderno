@@ -3,11 +3,12 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DEFAULT_FILTER, Filter, SortOrders } from '@domain/filter.type';
+import { SearchComponent } from '@ui/search/search.component';
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'qv1-filter',
-  imports: [FormsModule],
+  imports: [FormsModule, SearchComponent],
   templateUrl: './filter.widget.html',
   styleUrl: './filter.widget.css',
 })
@@ -19,9 +20,15 @@ export class FilterWidget {
     initialValue: DEFAULT_FILTER,
   });
 
-  search: WritableSignal<string> = signal<string>(this.defaultFilter().search);
-  orderBy: WritableSignal<string> = signal<string>(this.defaultFilter().orderBy);
-  sort: WritableSignal<SortOrders> = signal<SortOrders>(this.defaultFilter().sort);
+  search: WritableSignal<string> = signal<string>(
+    this.defaultFilter().search || DEFAULT_FILTER.search,
+  );
+  orderBy: WritableSignal<string> = signal<string>(
+    this.defaultFilter().orderBy || DEFAULT_FILTER.orderBy,
+  );
+  sort: WritableSignal<SortOrders> = signal<SortOrders>(
+    this.defaultFilter().sort || DEFAULT_FILTER.sort,
+  );
 
   private filter = computed(() => ({
     search: this.search(),

@@ -1,5 +1,5 @@
 <form>
-  <input type="search" name="search" [(ngModel)]="search" placeholder="Search..." />
+  <qv1-search [(searchTerm)]="search" />
   <fieldset class="grid">
     <select name="orderBy" [(ngModel)]="orderBy" aria-label="Choose field to sort by...">
       <option value="id">Sort by ID</option>
