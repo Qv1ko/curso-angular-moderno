@@ -1,6 +1,7 @@
-@for (favorite of favorites(); track $index) {
-<div>{{ favorite }}</div>
+@for (activity of activities(); track activity.id) {
+<a [routerLink]="['/bookings', activity.slug]">{{ activity.name }}</a>
+<span>at {{ activity.location }} on {{ activity.date }}</span>
 <hr />
 } @empty {
-<div>No favorites yet</div>
+<div>No activitys yet</div>
 }
