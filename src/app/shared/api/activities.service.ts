@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { Activity, NULL_ACTIVITY } from '@domain/activity.type';
+import { Filter } from '@domain/filter.type';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 
 @Service()
@@ -21,6 +22,11 @@ export class ActivitiesService {
       map((activities: Activity[]) => activities[0] || NULL_ACTIVITY),
       catchError((_) => of(NULL_ACTIVITY)),
     );
+  }
+
+  getActivitiesByFilter(filter: Filter) {
+    const url = `${this.apiUrl}?q=${filter.search}&_order=${filter.orderBy}&_sort=${filter.sort}`;
+    return this.httpClient$.get<Activity[]>(url);
   }
 
   putActivity(activity: Activity): Observable<object> {

@@ -7,7 +7,7 @@ import {
   Signal,
   viewChild,
 } from '@angular/core';
-import { debounce, debounceTime, distinctUntilChanged, filter, fromEvent, map, tap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, fromEvent, map } from 'rxjs';
 
 @Component({
   selector: 'qv1-search',
