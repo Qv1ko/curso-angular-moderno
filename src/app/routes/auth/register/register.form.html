@@ -1,24 +1,65 @@
 <form [formGroup]="form">
   <label for="username">
     <span>Username</span>
-    <input id="username" type="text" formControlName="username" />
+    @if(form.controls['username'].errors){<small>
+      {{ form.controls['username'].errors | json }}</small
+    >
+    }
+    <input
+      id="username"
+      type="text"
+      formControlName="username"
+      [attr.aria-invalid]="form.controls['username'].invalid"
+    />
   </label>
   <label for="email">
     <span>Email</span>
-    <input id="email" type="email" formControlName="email" />
+    @if(form.controls['email'].errors){
+    <small>{{ form.controls['email'].errors | json }}</small>
+    }
+    <input
+      id="email"
+      type="email"
+      formControlName="email"
+      [attr.aria-invalid]="form.controls['email'].invalid"
+    />
   </label>
   <label for="password">
     <span>Password</span>
-    <input id="password" type="password" formControlName="password" />
+    @if(form.controls['password'].errors){
+    <small>{{ form.controls['password'].errors | json }}</small>
+    }
+    <input
+      id="password"
+      type="password"
+      formControlName="password"
+      [attr.aria-invalid]="form.controls['password'].invalid"
+    />
   </label>
   <label for="confirm">
     <span>Confirm Password</span>
-    <input id="confirm" type="password" formControlName="confirm" />
+    @if(form.controls['confirm'].errors){
+    <small>{{ form.controls['confirm'].errors | json }}</small>
+    }
+    <input
+      id="confirm"
+      type="password"
+      formControlName="confirm"
+      [attr.aria-invalid]="form.controls['confirm'].invalid"
+    />
   </label>
   <label for="terms">
     <span>Accept the terms and conditions</span>
-    <input id="terms" type="checkbox" formControlName="terms" />
+    @if(form.controls['terms'].errors){
+    <small>{{ form.controls['terms'].errors | json }}</small>
+    }
+    <input
+      id="terms"
+      type="checkbox"
+      formControlName="terms"
+      [attr.aria-invalid]="form.controls['terms'].invalid"
+    />
   </label>
-  <button type="submit">Register</button>
+  <button type="submit" [disabled]="form.invalid">Register</button>
 </form>
 <pre>{{ form.value | json }}</pre>
