@@ -1,0 +1,19 @@
+import { JsonPipe } from '@angular/common';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'qv1-register',
+  imports: [ReactiveFormsModule, JsonPipe],
+  templateUrl: './register.form.html',
+  styleUrl: './register.form.css',
+})
+export class RegisterForm {
+  form: FormGroup = new FormGroup({
+    username: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    confirm: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    terms: new FormControl(false, Validators.requiredTrue),
+  });
+}

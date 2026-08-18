@@ -1,0 +1,24 @@
+<form [formGroup]="form">
+  <label for="username">
+    <span>Username</span>
+    <input id="username" type="text" formControlName="username" />
+  </label>
+  <label for="email">
+    <span>Email</span>
+    <input id="email" type="email" formControlName="email" />
+  </label>
+  <label for="password">
+    <span>Password</span>
+    <input id="password" type="password" formControlName="password" />
+  </label>
+  <label for="confirm">
+    <span>Confirm Password</span>
+    <input id="confirm" type="password" formControlName="confirm" />
+  </label>
+  <label for="terms">
+    <span>Accept the terms and conditions</span>
+    <input id="terms" type="checkbox" formControlName="terms" />
+  </label>
+  <button type="submit">Register</button>
+</form>
+<pre>{{ form.value | json }}</pre>
