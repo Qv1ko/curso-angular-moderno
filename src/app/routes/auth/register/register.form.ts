@@ -1,15 +1,18 @@
-import { JsonPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Register } from '@domain/register.type';
+import { Control } from '@ui/control/control';
 import { matchValidator } from '@ui/form/form.functions';
 
 @Component({
   selector: 'qv1-register',
-  imports: [ReactiveFormsModule, JsonPipe],
+  imports: [ReactiveFormsModule, Control],
   templateUrl: './register.form.html',
   styleUrl: './register.form.css',
 })
 export class RegisterForm {
+  register = output<Register>();
+
   form: FormGroup = new FormGroup(
     {
       username: new FormControl('', Validators.required),
@@ -22,4 +25,10 @@ export class RegisterForm {
       validators: [matchValidator('password', 'confirm')],
     },
   );
+
+  onSubmit() {
+    if (this.form.valid) {
+      this.register.emit(this.form.value);
+    }
+  }
 }

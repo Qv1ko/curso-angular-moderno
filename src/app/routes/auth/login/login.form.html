@@ -1,0 +1,17 @@
+<form [formGroup]="form" (submit)="onSubmit()">
+  <qv1-control
+    [controlName]="'email'"
+    [labelDisplay]="'Email'"
+    [errors]="form.controls['email'].errors"
+  >
+    <input id="email" type="email" />
+  </qv1-control>
+  <qv1-control
+    [controlName]="'password'"
+    [labelDisplay]="'Password'"
+    [errors]="form.controls['password'].errors"
+  >
+    <input id="password" type="password" />
+  </qv1-control>
+  <button type="submit">Login</button>
+</form>

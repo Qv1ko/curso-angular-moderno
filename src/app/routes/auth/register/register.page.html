@@ -3,7 +3,7 @@
     <h2>Register</h2>
   </header>
   <main>
-    <qv1-register />
+    <qv1-register (register)="onRegister($event)" />
   </main>
   <footer>
     <a [routerLink]="['/auth', 'login']">Login if already have an account</a>

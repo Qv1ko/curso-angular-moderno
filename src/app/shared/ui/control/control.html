@@ -1,0 +1,7 @@
+<label [for]="controlName()">
+  <span>{{ labelDisplay() }}</span>
+  @if(errors()){
+  <small> {{ errors() | json }} </small>
+  }
+  <ng-content></ng-content>
+</label>

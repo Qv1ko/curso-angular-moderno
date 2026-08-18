@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { Register } from '@domain/register.type';
 
 import { RegisterForm } from './register.form';
 
@@ -8,4 +9,8 @@ import { RegisterForm } from './register.form';
   templateUrl: './register.page.html',
   styleUrl: './register.page.css',
 })
-export default class RegisterPage {}
+export default class RegisterPage {
+  onRegister(register: Register) {
+    console.info('Register', register);
+  }
+}
