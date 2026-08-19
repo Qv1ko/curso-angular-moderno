@@ -248,13 +248,19 @@ import { CreateUserDTO, UpdateUserDTO, UserEntity } from "../types/user.types";
 export class UserRepository {
   constructor(private db: Pool) {}
 
-  async create(userData: CreateUserDTO & { password: string }): Promise<UserEntity> {
+  async create(
+    userData: CreateUserDTO & { password: string },
+  ): Promise<UserEntity> {
     const query = `
       INSERT INTO users (name, email, password)
       VALUES ($1, $2, $3)
       RETURNING id, name, email, password, created_at, updated_at
     `;
-    const { rows } = await this.db.query(query, [userData.name, userData.email, userData.password]);
+    const { rows } = await this.db.query(query, [
+      userData.name,
+      userData.email,
+      userData.password,
+    ]);
     return rows[0];
   }
 
@@ -274,7 +280,9 @@ export class UserRepository {
     const fields = Object.keys(updates);
     const values = Object.values(updates);
 
-    const setClause = fields.map((field, idx) => `${field} = $${idx + 2}`).join(", ");
+    const setClause = fields
+      .map((field, idx) => `${field} = $${idx + 2}`)
+      .join(", ");
 
     const query = `
       UPDATE users
@@ -322,7 +330,11 @@ declare global {
   }
 }
 
-export const authenticate = async (req: Request, res: Response, next: NextFunction) => {
+export const authenticate = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const token = req.headers.authorization?.replace("Bearer ", "");
 
@@ -453,7 +465,11 @@ const logger = pino({
   },
 });
 
-export const requestLogger = (req: Request, res: Response, next: NextFunction) => {
+export const requestLogger = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const start = Date.now();
 
   // Log response when finished
@@ -535,7 +551,12 @@ import { Request, Response, NextFunction } from "express";
 import { AppError } from "../utils/errors";
 import { logger } from "./logger.middleware";
 
-export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
+export const errorHandler = (
+  err: Error,
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       status: "error",
@@ -553,7 +574,10 @@ export const errorHandler = (err: Error, req: Request, res: Response, next: Next
   });
 
   // Don't leak error details in production
-  const message = process.env.NODE_ENV === "production" ? "Internal server error" : err.message;
+  const message =
+    process.env.NODE_ENV === "production"
+      ? "Internal server error"
+      : err.message;
 
   res.status(500).json({
     status: "error",
@@ -576,7 +600,6 @@ export const asyncHandler = (
 Node.js supports both SQL and NoSQL databases. Use connection pooling for all production databases.
 
 Key patterns covered in [references/advanced-patterns.md](references/advanced-patterns.md):
-
 - **PostgreSQL with connection pool** — `pg` Pool configuration and graceful shutdown
 - **MongoDB with Mongoose** — connection management and schema definition
 - **Transaction pattern** — `BEGIN`/`COMMIT`/`ROLLBACK` with `pg` client
