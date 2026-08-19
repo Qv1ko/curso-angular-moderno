@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AuthRepository } from '@api/auth.repository';
 import { Register } from '@domain/register.type';
 
 import { RegisterForm } from './register.form';
-import { AuthRepository } from '@api/auth.repository';
 
 @Component({
   imports: [RouterLink, RegisterForm],

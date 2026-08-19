@@ -8,7 +8,9 @@ import { LocalRepository } from '@services/local.repository';
 export class AuthStore {
   private localRepository: LocalRepository = inject(LocalRepository);
 
-  private state: WritableSignal<UserAccessToken> = signal<UserAccessToken>(this.localRepository.load('userAccessToken', NULL_USER_ACCESS_TOKEN));
+  private state: WritableSignal<UserAccessToken> = signal<UserAccessToken>(
+    this.localRepository.load('userAccessToken', NULL_USER_ACCESS_TOKEN),
+  );
 
   isAuthenticated: Signal<boolean> = computed(() => this.state().accessToken !== '');
   isAnonymous: Signal<boolean> = computed(() => this.state().accessToken === '');

@@ -16,12 +16,14 @@ export class AuthRepository {
   private authStore = inject(AuthStore);
 
   postRegister$(register: Register): Observable<UserAccessToken> {
-    return this.http.post<UserAccessToken>(`${this.apiUrl}/users`, register)
+    return this.http
+      .post<UserAccessToken>(`${this.apiUrl}/users`, register)
       .pipe(tap((userAccessToken: UserAccessToken) => this.authStore.setState(userAccessToken)));
   }
 
   postLogin$(login: Login): Observable<UserAccessToken> {
-    return this.http.post<UserAccessToken>(`${this.apiUrl}/login`, login)
+    return this.http
+      .post<UserAccessToken>(`${this.apiUrl}/login`, login)
       .pipe(tap((userAccessToken: UserAccessToken) => this.authStore.setState(userAccessToken)));
   }
 }
