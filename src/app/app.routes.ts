@@ -1,5 +1,8 @@
 import { Routes } from '@angular/router';
 
+import { authGuard } from './core/auth.guard';
+import { activityResolver } from './routes/bookings/activity.resolver';
+
 export const routes: Routes = [
   {
     path: '',
@@ -7,6 +10,10 @@ export const routes: Routes = [
   },
   {
     path: 'bookings/:slug',
+    canActivate: [authGuard],
+    resolve: {
+      activity: activityResolver,
+    },
     loadComponent: () => import('./routes/bookings/bookings.page'),
   },
   {

@@ -12,10 +12,10 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Meta, Title } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 import { ActivitiesService } from '@api/activities.service';
-import { toSignalMap } from '@api/signal.functions';
 import { changeActivityStatus } from '@domain/activity.functions';
-import { Activity, NULL_ACTIVITY } from '@domain/activity.type';
+import { Activity } from '@domain/activity.type';
 import { ActivityStatusComponent } from '@ui/activity-status/activity-status.component';
 
 import { ActivityTitlePipe } from './activity-title-pipe';
@@ -29,17 +29,15 @@ export default class BookingsPage {
   private httpClient$: HttpClient = inject(HttpClient);
   private bookingsUrl: string = 'http://localhost:3000/bookings';
   private activitiesService = inject(ActivitiesService);
+  private route: ActivatedRoute = inject(ActivatedRoute);
 
-  #title = inject(Title);
-  #meta = inject(Meta);
+  private title = inject(Title);
+  private meta = inject(Meta);
 
   slug: InputSignal<string> = input.required<string>();
 
-  activity: Signal<Activity> = toSignalMap(
-    this.slug,
-    (slug) => this.activitiesService.getActivityBySlug(slug),
-    NULL_ACTIVITY,
-  );
+  private resolvedActivity: Activity = this.route.snapshot.data['activity'];
+  activity: Signal<Activity> = signal(this.resolvedActivity);
 
   readonly currentParticipants = 3;
   readonly maxNewParticipants = this.activity().maxParticipants - this.currentParticipants;
@@ -64,10 +62,10 @@ export default class BookingsPage {
     effect(() => {
       const activity = this.activity();
 
-      this.#title.setTitle(activity.name);
+      this.title.setTitle(activity.name);
 
       const description = `${activity.name} in ${activity.location} on ${activity.date} for ${activity.price}`;
-      this.#meta.updateTag({ name: 'description', content: description });
+      this.meta.updateTag({ name: 'description', content: description });
     });
 
     effect(() => {
