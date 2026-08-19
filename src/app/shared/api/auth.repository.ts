@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Login } from '@domain/login.type';
 import { Register } from '@domain/register.type';
-import { User } from '@domain/user.type';
 import { UserAccessToken } from '@domain/userAccessToken.type';
 import { AuthStore } from '@state/auth.store';
 import { Observable, tap } from 'rxjs';

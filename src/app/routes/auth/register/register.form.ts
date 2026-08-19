@@ -28,7 +28,7 @@ export class RegisterForm {
 
   onSubmit() {
     if (this.form.valid) {
-      const { confirm, ...register } = this.form.value;
+      const { ...register } = this.form.value;
       this.register.emit(register);
     }
   }
