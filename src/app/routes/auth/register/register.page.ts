@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Register } from '@domain/register.type';
 
 import { RegisterForm } from './register.form';
+import { AuthRepository } from '@api/auth.repository';
 
 @Component({
   imports: [RouterLink, RegisterForm],
@@ -10,7 +11,9 @@ import { RegisterForm } from './register.form';
   styleUrl: './register.page.css',
 })
 export default class RegisterPage {
+  private authRepository: AuthRepository = inject(AuthRepository);
+
   onRegister(register: Register) {
-    console.info('Register', register);
+    this.authRepository.postRegister$(register).subscribe((response) => console.info(response));
   }
 }
