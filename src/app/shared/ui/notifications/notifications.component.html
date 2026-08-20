@@ -1,0 +1,17 @@
+<dialog open>
+  <article>
+    <header>
+      <h2>Notifications</h2>
+    </header>
+    @for (notification of notifications(); track notification) {
+      @if (notification.type === "error") {
+        <input disabled aria-invalid="true" [value]="notification.message" />
+      } @else {
+        <input disabled aria-invalid="false" [value]="notification.message" />
+      }
+    }
+    <footer>
+      <button (click)="close.emit()">Close</button>
+    </footer>
+  </article>
+</dialog>

@@ -5,6 +5,15 @@
         >© {{ today | date: "yyyy" }} {{ author.nickname }}
       </a>
     </span>
+    @if(hasNotifications()) {
+    <button
+      [attr.data-tooltip]="notificationsCount()"
+      class="outline"
+      (click)="toggleNotifications()"
+    >
+      🔥
+    </button>
+    }
     <span>
       @switch(cookiesStatus()) { @case ('pending') {
       <qv1-cookies (cancel)="cookiesStatus.set('rejected')" (accept)="cookiesStatus.set($event)" />
@@ -18,3 +27,6 @@
     </span>
   </nav>
 </footer>
+@if (hasNotifications() && showNotification()) {
+<qv1-notifications [notifications]="notifications()" (close)="onNotificationClose()" />
+}
