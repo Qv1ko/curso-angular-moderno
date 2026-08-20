@@ -4,6 +4,7 @@
   </header>
   <main>
     <qv1-register (register)="onRegister($event)" />
+    <qv1-feedback [feedback]="feedback()" />
   </main>
   <footer>
     <a [routerLink]="['/auth', 'login']">Login if already have an account</a>

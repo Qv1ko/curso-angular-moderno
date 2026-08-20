@@ -1,0 +1,14 @@
+@switch (status()) {
+  @case ("busy") {
+    <fieldset role="group">
+      <input disabled [value]="message()" />
+      <button disabled aria-busy="true" class="outline">.</button>
+    </fieldset>
+  }
+  @case ("success") {
+    <input disabled aria-invalid="false" [value]="message()" />
+  }
+  @case ("error") {
+    <input disabled aria-invalid="true" [value]="message()" />
+  }
+}
