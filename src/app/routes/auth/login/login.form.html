@@ -4,14 +4,14 @@
     [labelDisplay]="'Email'"
     [errors]="form.controls['email'].errors"
   >
-    <input id="email" type="email" />
+    <input id="email" type="email" formControlName="email" />
   </qv1-control>
   <qv1-control
     [controlName]="'password'"
     [labelDisplay]="'Password'"
     [errors]="form.controls['password'].errors"
   >
-    <input id="password" type="password" />
+    <input id="password" type="password" formControlName="password" />
   </qv1-control>
   <button type="submit">Login</button>
 </form>
